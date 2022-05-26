@@ -1,0 +1,30 @@
+spring:
+
+  #### DataSource
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres1234
+
+  #### JPA
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: create
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      use-new-id-generator-mappings: false
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+
+  #### Cache - Redis
+  cache:
+    type: redis
+  redis:
+    host: localhost
+    port: 6379
+#    cluster:
+#      nodes: localhost:6379
+

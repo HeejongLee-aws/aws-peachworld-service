@@ -1,0 +1,21 @@
+version: '2'
+services:
+  db:
+    image: postgres:13
+    ports:
+      - "5432:5432"
+    environment:
+      TZ: Asiz/Seoul
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres1234
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+    restart: unless-stopped
+
+  cache:
+    image: redis
+    ports:
+      - "6379:6379"
+    restart: unless-stopped
+
+
