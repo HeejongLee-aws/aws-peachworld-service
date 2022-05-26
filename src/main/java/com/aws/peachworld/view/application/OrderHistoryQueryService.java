@@ -21,8 +21,8 @@ public class OrderHistoryQueryService {
 
     @Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)
     @Cacheable(cacheNames = CacheNameType.TTS_1, key = "'order_history_user_id' + #userId")
-    public List<OrderHistory> findByUserId(final String userId){
-        return this.orderHistoryRepository.findByUserId(userId);
+    public List<OrderHistory> findByUsername(final String userId){
+        return this.orderHistoryRepository.findByUsername(userId);
     }
 
     @Transactional(readOnly = true, propagation = Propagation.NOT_SUPPORTED)

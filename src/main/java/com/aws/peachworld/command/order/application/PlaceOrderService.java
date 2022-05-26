@@ -11,9 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -31,26 +29,18 @@ public class PlaceOrderService {
     @Transactional(transactionManager = "transactionManager")
     public OrderComplete placeOrder(PlaceOrder placeOrder) throws NotExistOrdererException {
 
-        OrderNo orderNo = this.orderNoRepository.nextOrderNo();
-        Orderer orderer = this.ordererRepository.findByUsername(placeOrder.getUsername());
+        Optional<Orderer> orderer = this.ordererRepository.findByUsername(placeOrder.getUsername());
 
-        //
-        OrderProducts orderProducts = this.orderProductRepository.findByProductIds(placeOrder.getOrderProductIds());
+        if(orderer.isEmpty()){
+            throw new NotExistOrdererException();
+        }
 
-        List<OrderLine> orderLines = placeOrder.getOrderLineRequests().stream()
-                .map( m ->
-                        OrderLine.builder()
-                            .orderNo(orderNo)
-                            .product(orderProducts.getOrderProduct(m.getProductId()))
-                            .quantity(m.getQuantity()).build()
-                    ).collect(Collectors.toList());
+        // SAGA
 
-        final Order order = Order.builder()
-                .orderer(orderer)
-                .orderNo(orderNo)
-                .orderLines(orderLines)
-                .shippingInformation(placeOrder.getShippingRequest().createShippingInformation()).build();
+        final OrderNo orderNo = this.orderNoRepository.nextOrderNo();
+        final OrderProducts orderProducts = this.orderProductRepository.findByProductIds(placeOrder.getOrderProductIds());
 
+        final Order order = placeOrder.createOrder(orderNo, orderer.get(), orderProducts);
         final Order saved = this.orderRepository.save(order);
 
         return new OrderComplete(saved.getOrderNo().getOrderNo());

@@ -8,7 +8,7 @@ public interface OrderHistoryRepository {
 
     OrderHistory findByOrderNo(final Long orderNo);
 
-    List<OrderHistory> findByUserId(final String userId);
+    List<OrderHistory> findByUsername(final String username);
 
     OrderHistory save(OrderHistory orderHistory);
 }

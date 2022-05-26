@@ -1,5 +1,10 @@
 package com.aws.peachworld.command.order.application;
 
+import com.aws.peachworld.command.order.application.model.Order;
+import com.aws.peachworld.command.order.application.model.OrderProducts;
+import com.aws.peachworld.command.order.application.model.valueobjects.OrderLine;
+import com.aws.peachworld.command.order.application.model.valueobjects.OrderNo;
+import com.aws.peachworld.command.order.application.model.valueobjects.Orderer;
 import com.aws.peachworld.command.order.application.model.valueobjects.ShippingInformation;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -55,4 +60,25 @@ public class PlaceOrder {
         private String transactionId;
         private String amount;
     }
+
+
+    public Order createOrder(OrderNo orderNo, Orderer orderer, OrderProducts orderProducts){
+        List<OrderLine> orderLines = this.getOrderLineRequests().stream()
+                .map( m ->
+                        OrderLine.builder()
+                                .orderNo(orderNo)
+                                .product(orderProducts.getOrderProduct(m.getProductId()))
+                                .quantity(m.getQuantity()).build()
+                ).collect(Collectors.toList());
+
+        final Order order = Order.builder()
+                .orderer(orderer)
+                .orderNo(orderNo)
+                .orderLines(orderLines)
+                .shippingInformation(this.getShippingRequest().createShippingInformation()).build();
+
+        return order;
+
+    }
+
 }

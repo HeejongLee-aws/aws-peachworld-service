@@ -22,11 +22,11 @@ public class OrderHistory implements Serializable  {
     @Column(name = "order_no")
     private Long orderNo;
 
-    @Column(name = "user_id")
-    private String userId;
+    @Column(name = "member_id")
+    private Long memberId;
 
-    @Column(name = "user_name")
-    private String userName;
+    @Column(name = "username")
+    private String username;
 
     @Column(name = "amount")
     private Long amount;
@@ -34,4 +34,12 @@ public class OrderHistory implements Serializable  {
     @Column(name = "payment_method")
     private String paymentMethod;
 
+    @Column(name = "payment_status")
+    private String paymentStatus;
+
+    @Column(name = "harvest_status")
+    private String harvestStatus;
+
+    @Column(name = "ship_status")
+    private String shipStatus;
 }

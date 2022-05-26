@@ -17,15 +17,15 @@ public class OrdererRepositoryImpl implements OrdererRepository {
     private MemberRepository memberRepository;
 
     @Override
-    public Orderer findByUsername(String username) throws NotExistOrdererException {
+    public Optional<Orderer> findByUsername(String username) {
         Optional<Member> found = this.memberRepository.findByUsername(username);
 
         if ( found.isEmpty() ) {
-            throw new NotExistOrdererException();
+            return Optional.empty();
         }
 
         Member member = found.get();
-        return new Orderer(member.getId(), member.getUsername(), member.getName());
+        return Optional.of(new Orderer(member.getId(), member.getUsername(), member.getName()));
     }
 
 

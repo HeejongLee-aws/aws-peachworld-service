@@ -18,7 +18,7 @@ public class OrderHistoryController {
 
     @GetMapping("/orderhistory/users/{userId}")
     public ResponseEntity<List<OrderHistory>> findByUserId(@PathVariable final String userId) {
-        List<OrderHistory> orderHistories = this.orderHistoryQuery.findByUserId(userId);
+        List<OrderHistory> orderHistories = this.orderHistoryQuery.findByUsername(userId);
         return ResponseEntity.ok(orderHistories);
     }
 
