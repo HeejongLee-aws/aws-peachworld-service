@@ -15,7 +15,7 @@ public class MemberSignUpService {
 
     private final MemberRepository repository;
 
-    public SignUpComplete signUp(MemberSignUp command) throws MemberAlreadyExistException {
+    public SignUpComplete signUp(SignUp command) throws MemberAlreadyExistException {
 
         final String username = command.getUsername();
         Optional<Member> found = this.repository.findByUsername(username);

@@ -1,6 +1,6 @@
 package com.aws.peachworld;
 
-import com.aws.peachworld.view.application.UpdateOrderHistory;
+import com.aws.peachworld.view.application.ChangeOrderHistory;
 import com.aws.peachworld.view.application.readmodel.OrderHistory;
 import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ public class PeachWorld {
     @Component
     @RequiredArgsConstructor
     public static class StartupInitializer {
-        private final UpdateOrderHistory updateOrderHistory;
+        private final ChangeOrderHistory updateOrderHistory;
 
         @EventListener(ContextRefreshedEvent.class)
         public void contextRefreshedEvent() {

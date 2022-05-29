@@ -1,7 +1,7 @@
 package com.aws.peachworld.command.member.adapter;
 
 import com.aws.peachworld.command.member.application.MemberAlreadyExistException;
-import com.aws.peachworld.command.member.application.MemberSignUp;
+import com.aws.peachworld.command.member.application.SignUp;
 import com.aws.peachworld.command.member.application.MemberSignUpService;
 import com.aws.peachworld.command.member.application.SignUpComplete;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ public class MemberSignUpController {
     }
 
     @PostMapping("/member")
-    public ResponseEntity<SignUpComplete> signUp(@RequestBody MemberSignUp command) {
+    public ResponseEntity<SignUpComplete> signUp(@RequestBody SignUp command) {
 
         try {
             SignUpComplete complete = this.service.signUp(command);
